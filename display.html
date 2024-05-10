@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EVHS Lunch Menu</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Apply teal background to the body */
+        body {
+            background-color: teal;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Styling for the card grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust card width and number of columns as needed */
+            gap: 20px; /* Spacing between cards */
+            padding: 20px;
+            justify-items: center; /* Center align cards */
+        }
+
+        /* Styling for each card */
+        .card {
+            width: 100%; /* Take up entire space of the grid column */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            background-color: white; /* Set card background color */
+            position: relative; /* To position text relative to this element */
+        }
+
+        /* Styling for the status square */
+        .status {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* To position the "Available" text */
+        }
+
+        /* Styling for the caption */
+        .caption {
+            font-size: larger;
+            font-weight: bold;
+        }
+
+        /* Styling for the "Available" text */
+        .available-text {
+            position: absolute;
+            top: 5px; /* Adjust this value to vertically position the text */
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-weight: normal;
+            text-transform: uppercase;
+        }
+
+        /* Styling for the footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+
+        footer img {
+            max-width: 500px; /* Increase image width */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+<body>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, setDoc, doc } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js';
+        import {get, ref, onValue} from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js';
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDgmPLQR6i7gSDOmWlISqjmD_nWvL1bu8w",
+          authDomain: "livelaughlunch-7ea7c.firebaseapp.com",
+          projectId: "livelaughlunch-7ea7c",
+          storageBucket: "livelaughlunch-7ea7c.appspot.com",
+          messagingSenderId: "547614662513",
+          appId: "1:547614662513:web:f1202aac0a7902de72e0d0",
+          measurementId: "G-00XDDP06VX"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        async function renderItems() {
+            const itemsRef = collection(db, '/buttons');
+            const querySnapshot = await getDocs(itemsRef);
+            
+            querySnapshot.forEach(doc3 => {
+                console.log(doc3.data());
+                const container = document.createElement('div');
+                container.className = "card";
+                const inContainer = document.createElement('div');
+                inContainer.className = 'status green';
+                const spanT = document.createElement('span');
+                spanT.className = "available-text";
+                spanT.textContent = "Avalible";
+                if(!doc3.data().inStock){
+                    inContainer.style.backgroundColor = "red";
+                    spanT.textContent = "Unavalible";
+                }
+                inContainer.appendChild(spanT);
+                container.appendChild(inContainer);
+                const pTag = document.createElement('p');
+                pTag.textContent = doc3.data().name;
+                pTag.className = "caption";
+                container.appendChild(pTag);
+                document.getElementById("gridDiv").appendChild(container);
+            });
+        }
+
+
+        window.onload = () => { 
+            renderItems();
+            // Reload the page every minute
+            setInterval(() => {
+                location.reload();
+            }, 60000); // 60000 milliseconds = 1 minute
+        };
+    </script>
+
+
+<!-- Your existing content -->
+<h1 class="text-2xl font-bold text-white bg-teal-600 p-4 mb-4 text-center">EVHS Lunch Inventory</h1>
+
+<div class="card-grid" id = "gridDiv">
+    <!-- <div class="card">
+        <div class="status green">
+            <span class="available-text">Available</span>
+        </div>
+        <p class="caption">Chicken Chalupa</p>
+    </div>
+
+    <div class="card">
+        <div class="status green">
+            <span class="available-text">Available</span>
+        </div>
+        <p class="caption">Apple Sauce</p>
+    </div>
+
+    <div class="card">
+        <div class="status green">
+            <span class="available-text">Available</span>
+        </div>
+        <p class="caption">Bean Burrito</p>
+    </div> -->
+
+    <!-- Add more items here as needed -->
+</div>
+
+<!-- Footer with the logo -->
+<footer>
+    <img src="https://static.hudl.com/users/prod/13615471_be838f94878a498d99df17f117593e1d.jpg" alt="Your Logo">
+</footer>
+
+</body>
+</html>

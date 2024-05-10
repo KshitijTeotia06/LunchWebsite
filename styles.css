@@ -1,0 +1,44 @@
+/* styles.css */
+
+/* Set a black background and white text color */
+body {
+    background-color: rgba(1, 13, 28, 0.84);
+    color: rgba(255, 255, 255, 0.73);
+    /* Change to Fira Sans font */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Quicksand", monospace;
+}
+
+/* Style the title element to make it visible and bold */
+header h1 {
+    font-size: 36px; /* Increase the font size for the title */
+    font-weight: bold; /* Add this to make the title bold */
+}
+
+/* Center-align the navigation links horizontally */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px; /* Increase the margin between navigation links */
+}
+
+/* Center-align the sections and text */
+section {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Increase the font size for paragraphs and list items */
+p, ul, li {
+    font-size: 20px;
+}
