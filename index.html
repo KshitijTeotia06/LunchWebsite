@@ -122,10 +122,10 @@
                 inContainer.className = 'status green';
                 const spanT = document.createElement('span');
                 spanT.className = "available-text";
-                spanT.textContent = "Avalible";
+                spanT.textContent = "Available";
                 if(!doc3.data().inStock){
                     inContainer.style.backgroundColor = "red";
-                    spanT.textContent = "Unavalible";
+                    spanT.textContent = "Unavailable";
                 }
                 inContainer.appendChild(spanT);
                 container.appendChild(inContainer);
